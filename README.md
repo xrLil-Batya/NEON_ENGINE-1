@@ -22,6 +22,8 @@ gamedata находится в [отдельном репозитории](https
 * Установить Visual Studio. При установке выбрать Рабочие нагрузки -> Разработка классических приложений на C++.
 (Необходимо наличие MSVC версии 143 и пакет SDK для Windows 10)
 
+* MFC, ATL Тоже нужно выбрать 
+
 * [Скачать](https://www.microsoft.com/en-us/download/details.aspx?id=6812) и установить DirectX SDK.
 
 * Открыть src/engine.sln
