@@ -2960,9 +2960,7 @@ extern int EnableLogging;
 
 void register_mp_console_commands()
 {
-//	CMD1(ÑÑÑ_StartSurge,    "adm_surge");
-//	CMD1(ÑÑÑ_StartFallout,  "adm_fallout");
-//	CMD1(ÑÑÑ_StartPsi,		"adm_psistorm");
+ 
 	CMD4(CCC_Vector3, "cam_2_offset",
 
 		&CCameraLook2::m_cam_offset,
@@ -2970,11 +2968,13 @@ void register_mp_console_commands()
 		Fvector().set(1000, 1000, 1000)
 	);
 
-//	CMD4(CCC_Integer, "weather_logging", &EnableLogging, 0, 1);
-//	CMD1(CCC_WEAPON_POSITION, "weapon_offset");
+	//Voice Chat 
+	CMD4(CCC_Float, "snd_volume_players", &psSoundVPlayers, 0, 1);
+	CMD4(CCC_Float, "snd_volume_recorder", &psSoundVRecorder, 0, 1);
+	CMD4(CCC_Integer, "snd_recorder_mode", &psSoundRecorderMode, 0, 1);
+	CMD4(CCC_Integer, "snd_recorder_denoise", &psSoundRecorderDenoise, 0, 1);
 
-
-
+	// GSPAWN
 	CMD1(CCC_SpawnToInventory,		"sv_spawn_to_player_inv");
 	CMD1(CCC_SpawnToObjWithId,		"sv_spawn_to_obj_with_id");
 	CMD1(CCC_SpawnOnPosition,		"sv_spawn_on_position"	);
