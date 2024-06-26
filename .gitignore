@@ -38,3 +38,5 @@ SDK/sources/libogg-1.1.4/win32/
 SDK/sources/libtheora-1.1.1/win32/
 SDK/sources/libvorbis-1.2.3/win32/
 /.vs
+/SDK/sources/opus-1.4/.vs
+/SDK/sources/opus-1.4/.vs

@@ -39,7 +39,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>A:\GitHub\Kornelius\SDK\sources\opus-1.4\include;A:\GitHub\Kornelius\SDK\sources\opus-1.4;A:\GitHub\Kornelius\SDK\sources\opus-1.4\celt;A:\GitHub\Kornelius\SDK\sources\opus-1.4\silk;A:\GitHub\Kornelius\SDK\sources\opus-1.4\silk\float;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\SDK\sources\opus-1.4\include;$(SolutionDir)..\SDK\sources\opus-1.4;$(SolutionDir)..\SDK\sources\opus-1.4\celt;$(SolutionDir)..\SDK\sources\opus-1.4\silk;$(SolutionDir)..\SDK\sources\opus-1.4\silk\float;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <ExceptionHandling>
