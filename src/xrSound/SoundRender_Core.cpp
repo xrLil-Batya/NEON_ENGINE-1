@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
+
 
 #include "../xrEngine/xrLevel.h"
 #include "soundrender_core.h"
@@ -10,7 +10,6 @@
 #include <eax/eax.h>
 #pragma warning(pop)
 
-int		psSoundTargets			= 32;
 Flags32	psSoundFlags			= {ss_Hardware | ss_EAX};
 float	psSoundOcclusionScale	= 0.5f;
 float	psSoundCull				= 0.01f;
@@ -20,7 +19,15 @@ float	psSoundVEffects			= 1.0f;
 float	psSoundVFactor			= 1.0f;
 
 float	psSoundVMusic			= 1.f;
+
+int		psSoundTargets			= 256;
 int		psSoundCacheSizeMB		= 32;
+
+float	psSoundVPlayers			= 1.f;
+
+float	psSoundVRecorder = 1.f;
+int		psSoundRecorderMode = 1;
+int		psSoundRecorderDenoise = 1;
 
 CSoundRender_Core*				SoundRender = 0;
 CSound_manager_interface*		Sound		= 0;

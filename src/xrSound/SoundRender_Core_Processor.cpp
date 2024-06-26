@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
+
 
 #include "cl_intersect.h"
 #include "SoundRender_Core.h"
@@ -231,27 +231,24 @@ float CSoundRender_Core::get_occlusion(Fvector& P, float R, Fvector* occ)
 	range = dir.magnitude	();
 	dir.div					(range);
 
-	if (0!=geom_MODEL){
+	if (0!=geom_MODEL && geom_MODEL->status == CDB::MODEL::S_READY)
+	{
 		bool bNeedFullTest	= true;
 		// 1. Check cached polygon
 		float _u,_v,_range;
 		if (CDB::TestRayTri(base,dir,occ,_u,_v,_range,true))
-			if (_range>0 && _range<range){occ_value=psSoundOcclusionScale; bNeedFullTest=false;}
+		if (_range>0 && _range<range){occ_value=psSoundOcclusionScale; bNeedFullTest=false;}
 		// 2. Polygon doesn't picked up - real database query
-		if (bNeedFullTest){
-#ifdef _EDITOR
-			ETOOLS::ray_options		(CDB::OPT_ONLYNEAREST);
-			ETOOLS::ray_query		(geom_MODEL,base,dir,range);
-			if (0!=ETOOLS::r_count()){ 
-				// cache polygon
-				const CDB::RESULT*	R = ETOOLS::r_begin			();
-#else
+		
+		if (bNeedFullTest)
+		{
 			geom_DB.ray_options		(CDB::OPT_ONLYNEAREST);
 			geom_DB.ray_query		(geom_MODEL,base,dir,range);
-			if (0!=geom_DB.r_count()){ 
+			
+			if (0!=geom_DB.r_count())
+			{ 
 				// cache polygon
-				const CDB::RESULT*	R = geom_DB.r_begin		();
-#endif            
+				const CDB::RESULT*	R = geom_DB.r_begin		();          
 				const CDB::TRI&		T = geom_MODEL->get_tris	() [ R->id ];
 				const Fvector*		V = geom_MODEL->get_verts	();
 				occ[0].set			(V[T.verts[0]]);
@@ -261,19 +258,14 @@ float CSoundRender_Core::get_occlusion(Fvector& P, float R, Fvector* occ)
 			}
 		}
 	}
-	if (0!=geom_SOM){
-#ifdef _EDITOR
-		ETOOLS::ray_options		(CDB::OPT_CULL);
-		ETOOLS::ray_query		(geom_SOM,base,dir,range);
-		u32 r_cnt				= ETOOLS::r_count();
-        CDB::RESULT*	_B 		= ETOOLS::r_begin();
-#else
+	if (0!=geom_SOM  && geom_SOM->status == CDB::MODEL::S_READY)
+	{
 		geom_DB.ray_options		(CDB::OPT_CULL);
 		geom_DB.ray_query		(geom_SOM,base,dir,range);
 		u32 r_cnt				= geom_DB.r_count();
-        CDB::RESULT*	_B 		= geom_DB.r_begin();
-#endif            
-		if (0!=r_cnt){
+        CDB::RESULT*	_B 		= geom_DB.r_begin();            
+		if (0!=r_cnt)
+		{
 			for (u32 k=0; k<r_cnt; k++){
 				CDB::RESULT* R	 = _B+k;
 				occ_value		*= *(float*)&R->dummy;

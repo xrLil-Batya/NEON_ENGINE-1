@@ -30,18 +30,15 @@
 #include <objbase.h>
 #pragma warning(pop)
 
+
 #ifdef _EDITOR
 	log_fn_ptr_type*	pLog = NULL;
 #endif
 
-void __cdecl al_log(char* msg)
-{
-	Log(msg);
-}
+ 
 
 ALDeviceList::ALDeviceList()
 {
-	pLog					= al_log;
 	snd_device_id			= u32(-1);
 	Enumerate();
 }
@@ -58,6 +55,18 @@ ALDeviceList::~ALDeviceList()
 	xr_free						(snd_devices_token);
 	snd_devices_token			= NULL;
 }
+
+/**
+ * No error
+ */
+
+//#define ALC_NO_ERROR                             0	// 0
+//#define ALC_INVALID_DEVICE                       0xA001// 40961
+//#define ALC_INVALID_CONTEXT                      0xA002// 40962
+//#define ALC_INVALID_ENUM                         0xA003// 40963
+//#define ALC_INVALID_VALUE                        0xA004// 40964
+//#define ALC_OUT_OF_MEMORY                        0xA005// 40965
+
 
 
 void ALDeviceList::Enumerate()
@@ -77,9 +86,9 @@ void ALDeviceList::Enumerate()
 	{
 		Msg("SOUND: OpenAL: EnumerationExtension Present");
 
-		devices				= (char *)alcGetString(NULL, ALC_DEVICE_SPECIFIER);
-		Msg					("devices %s",devices);
-		xr_strcpy(			m_defaultDeviceName, (char *)alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER));
+		devices				= (char *) alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+
+		xr_strcpy(			m_defaultDeviceName, (char *) alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER));
 		Msg("SOUND: OpenAL: system  default SndDevice name is %s", m_defaultDeviceName);
 		
 		// ManowaR
@@ -98,18 +107,32 @@ void ALDeviceList::Enumerate()
 		}
 
 		index				= 0;
+
+
 		// go through device list (each device terminated with a single NULL, list terminated with double NULL)
 		while(*devices != NULL) 
 		{
+			//Msg("SOUND: device %s", devices);
+
 			ALCdevice *device		= alcOpenDevice(devices);
+
+			Msg("SOUND: open device %s", devices);
+
 			if (device) 
 			{
 				ALCcontext *context = alcCreateContext(device, NULL);
+
+				Msg("SOUND: create context %p", context);
+ 
 				if (context) 
 				{
 					alcMakeContextCurrent(context);
+
+				
 					// if new actual device name isn't already in the list, then add it...
 					actualDeviceName = alcGetString(device, ALC_DEVICE_SPECIFIER);
+
+					Msg("SOUND: current context %p, %s", context, actualDeviceName);
 
 					if ( (actualDeviceName != NULL) && xr_strlen(actualDeviceName)>0 ) 
 					{
@@ -129,19 +152,23 @@ void ALDeviceList::Enumerate()
 						m_devices.back().props.efx			= (alIsExtensionPresent("ALC_EXT_EFX") == TRUE);
 						m_devices.back().props.xram			= (alIsExtensionPresent("EAX_RAM") == TRUE);
 
-						m_devices.back().props.eax_unwanted	= ((0==xr_strcmp(actualDeviceName,AL_GENERIC_HARDWARE))||
-															(0==xr_strcmp(actualDeviceName,AL_GENERIC_SOFTWARE)));
+						m_devices.back().props.eax_unwanted	= ((0==xr_strcmp(actualDeviceName,AL_GENERIC_HARDWARE)) || (0==xr_strcmp(actualDeviceName,AL_GENERIC_SOFTWARE)));
+
+						Msg("SOUND: OpenAL: create : %s", actualDeviceName);
+
 						++index;
 					}
 					alcDestroyContext(context);
-				}else
+				}
+				else
 				{
-					Msg("SOUND: OpenAL: cant create context for %s",device);
+					Msg("SOUND: OpenAL: cant create context for %s, ERROR Code: %d", device, alcGetError(device));
 				}
 				alcCloseDevice(device);
-			}else
+			}
+			else
 			{
-				Msg("SOUND: OpenAL: cant open device %s",devices);
+				Msg("SOUND: OpenAL: cant open device %s, ERROR Code: %d", device, alcGetError(device) );
 			}
 
 			devices		+= xr_strlen(devices) + 1;
@@ -171,7 +198,7 @@ void ALDeviceList::Enumerate()
 	for (u32 j = 0; j < GetNumDevices(); j++)
 	{
 		GetDeviceVersion		(j, &majorVersion, &minorVersion);
-		Msg	("%d. %s, Spec Version %d.%d %s eax[%d] efx[%s] xram[%s]", 
+		Msg("%d. %s, Spec Version %d.%d %s eax[%d] efx[%s] xram[%s]",
 			j+1, 
 			GetDeviceName(j), 
 			majorVersion, 
@@ -216,13 +243,16 @@ void ALDeviceList::SelectBestDevice()
 				new_device_id			= i;
 			}
 		}
+
 		if(new_device_id==u32(-1) )
 		{
-			R_ASSERT(GetNumDevices()!=0);
+			//R_ASSERT(GetNumDevices()!=0);
 			new_device_id = 0; //first
 		};
+
 		snd_device_id = new_device_id;
 	}
+
 	if(GetNumDevices()==0)
 		Msg("SOUND: Can't select device. List empty");
 	else

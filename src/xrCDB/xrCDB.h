@@ -54,17 +54,10 @@ namespace CDB
 	class		XRCDB_API		MODEL
 	{
 		friend class COLLIDER;
-		enum
-		{
-			S_READY				= 0,
-			S_INIT				= 1,
-			S_BUILD				= 2,
-			S_forcedword		= u32(-1)
-		};
+		
 	private:
 		xrCriticalSection		cs;
 		Opcode::OPCODE_Model*	tree;
-		u32						status;		// 0=ready, 1=init, 2=building
 
 		// tris
 		TRI*					tris;
@@ -72,6 +65,16 @@ namespace CDB
 		Fvector*				verts;
 		int						verts_count;
 	public:
+		u32						status;		// 0=ready, 1=init, 2=building
+
+		enum
+		{
+			S_READY = 0,
+			S_INIT = 1,
+			S_BUILD = 2,
+			S_forcedword = u32(-1)
+		};
+
 		MODEL();
 		~MODEL();
 

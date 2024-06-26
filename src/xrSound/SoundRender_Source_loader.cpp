@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
+
 
 #include <msacm.h>
 
@@ -62,7 +62,14 @@ void CSoundRender_Source::LoadWave	(LPCSTR pName)
 	OggVorbis_File			ovf;
 	ov_callbacks ovc		= {ov_read_func,ov_seek_func,ov_close_func,ov_tell_func};
 	IReader* wave			= FS.r_open		(pname.c_str()); 
-	R_ASSERT3				(wave&&wave->length(),"Can't open wave file:",pname.c_str());
+	//R_ASSERT3				(wave&&wave->length(),"Can't open wave file:",pname.c_str());
+	
+	if (! (wave&&wave->length()) )
+	{	
+		Msg("Check Snd File: %s !!!Can't open wave file", pname.c_str());
+		return;
+	}
+
 	ov_open_callbacks		(wave,&ovf,NULL,0,ovc);
 
 	vorbis_info* ovi		= ov_info(&ovf,-1);
@@ -121,8 +128,16 @@ void CSoundRender_Source::LoadWave	(LPCSTR pName)
 		Log					("! Missing ogg-comment, file: ",pName);
 	}
 	R_ASSERT3((m_fMaxAIDist>=0.1f)&&(m_fMaxDist>=0.1f),"Invalid max distance.",pName);
-
-	ov_clear				(&ovf);
+	try
+	{
+		//Msg("Start Clear File: %s", pName);
+		//ov_clear(&ovf);
+		//Msg("File Removed: %s", pName);
+	}
+	catch (...)
+	{
+		Msg("Cant Remove File: %s", pName);
+	}
 	FS.r_close				(wave);
 }
 

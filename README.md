@@ -1,15 +1,30 @@
-# X-RAY OMP
+# X-RAY Omp By Se7kills
 X-RAY OMP - проект, представляющий собой набор правок движка/скриптов игры S.T.A.L.K.E.R.: Зов Припяти для мультиплеера. Проект создан с целью поделиться некоторыми наработками с другими разработчиками мультиплеерных проектов.
 
+Рабочий: x64.
+jsonxx (Возможно включить сохранение в виде Json файла )
+
+Добавлено Сохранение игрового процесса, Режим анимаций, Безопастный режим, Stcop Базовая логика для scopes. 
+Фикс поверхностей для Прицелов.
+
+Войс чат. 
+Рабочие Механики.
+ 
+Возможно чет еще. 
+
 ## gamedata
-gamedata находится в [отдельном репозитории](https://github.com/xray-omp/omp-gamedata).
+gamedata находится в [отдельном репозитории](https://github.com/xray-omp/omp-gamedata). 
+* se7kills (Вроде должно работать на OMP gamedata)
 
 ## Сборка
-* [Скачать](https://visualstudio.microsoft.com/ru/) Viusal Studio 2019 (достаточно Community версии).
+* [Скачать](https://visualstudio.microsoft.com/ru/) Viusal Studio 2022 (достаточно Community версии).
+
 * Установить Visual Studio. При установке выбрать Рабочие нагрузки -> Разработка классических приложений на C++.
-(Необходимо наличие MSVC версии 142 и пакет SDK для Windows 10)
+(Необходимо наличие MSVC версии 143 и пакет SDK для Windows 10)
+
 * [Скачать](https://www.microsoft.com/en-us/download/details.aspx?id=6812) и установить DirectX SDK.
+
 * Открыть src/engine.sln
 * Меняем конфигурацию сборки на Release\* и собираем!
 
-\* Debug сборка также возможна. Mixed сборка не настроена! Release_Dedicated и Debug_Dedicated предназначены для выделенного сервера, на них собирается только xrEngine.
+* DEBUG Выпилен !!!

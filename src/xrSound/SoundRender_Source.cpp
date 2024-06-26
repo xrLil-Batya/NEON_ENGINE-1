@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
+
 
 #include "soundrender_core.h"
 #include "soundrender_source.h"
@@ -46,31 +46,21 @@ bool ov_error(int res)
 void CSoundRender_Source::i_decompress_fr(OggVorbis_File* ovf, char* _dest, u32 left)
 {
 	// vars
-//	char		eof = 0;
-	int			current_section;
+ 	int			current_section;
 	long		TotalRet = 0, ret;
-
-//.	char		*PCM;
-//.	PCM = new char[left];
-
+ 
 	// Read loop
 	while (TotalRet < (long)left) 
 	{
 		ret = ov_read(ovf, /*PCM*/ _dest+ TotalRet, left - TotalRet, 0, 2, 1, &current_section);
 
 		// if end of file or read limit exceeded
-		if (ret == 0) break;
-		else if (ret < 0) 		// Error in bitstream
-		{
-		//
-		}
-		else
-		{
-			TotalRet += ret;
-		}
-	}
-//.	memcpy(_dest, PCM,TotalRet);
-//.	delete [] PCM;
+		if (ret <= 0) 
+			break;
+  		else
+ 			TotalRet += ret;
+ 	}
+ 
 }
 
 

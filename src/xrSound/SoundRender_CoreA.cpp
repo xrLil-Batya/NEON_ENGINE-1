@@ -1,8 +1,9 @@
 #include "stdafx.h"
-#pragma hdrstop
+
 
 #include "soundrender_coreA.h"
 #include "soundrender_targetA.h"
+#include "SoundVoiceChat.h"
 
 CSoundRender_CoreA*	SoundRenderA= 0; 
 
@@ -81,20 +82,24 @@ void CSoundRender_CoreA::_initialize(int stage)
 
 		if (0==pDeviceList->GetNumDevices())
 		{ 
-			CHECK_OR_EXIT			(0,"OpenAL: Can't create sound device.");
-			xr_delete				(pDeviceList);
+			//R_ASSERT			(0,"OpenAL: Can't create sound device.");
+			 
+			//xr_delete				(pDeviceList);
 		}
 		return;
 	}
 	
 	pDeviceList->SelectBestDevice	();
-	R_ASSERT						(snd_device_id>=0 && snd_device_id<pDeviceList->GetNumDevices());
+	
+	
+	//R_ASSERT						(snd_device_id>=0 && snd_device_id<pDeviceList->GetNumDevices());
 	const ALDeviceDesc& deviceDesc	= pDeviceList->GetDeviceDesc(snd_device_id);
     // OpenAL device
     pDevice						= alcOpenDevice		(deviceDesc.name);
+	
 	if (pDevice == NULL)
 	{
-		CHECK_OR_EXIT			(0,"SOUND: OpenAL: Failed to create device.");
+		//CHECK_OR_EXIT			(0,"SOUND: OpenAL: Failed to create device.");
 		bPresent				= FALSE;
 		return;
 	}
@@ -152,7 +157,8 @@ void CSoundRender_CoreA::_initialize(int stage)
 			if (T->_initialize())
 			{
 				s_targets.push_back	(T);
-			}else
+			}
+			else
 			{
         		Log					("! SOUND: OpenAL: Max targets - ",tit);
 				T->_destroy			();
@@ -160,7 +166,17 @@ void CSoundRender_CoreA::_initialize(int stage)
         		break;
 			}
 		}
+
+		pSoundVoiceChat = xr_new<SoundVoiceChat>(pContext);
 	}
+}
+
+void CSoundRender_CoreA::update(const Fvector& P, const Fvector& D, const Fvector& N)
+{
+	inherited::update(P, D, N);
+
+	if (pSoundVoiceChat)
+		pSoundVoiceChat->Update(P, D, N);
 }
 
 void CSoundRender_CoreA::set_master_volume(float f )
@@ -173,6 +189,9 @@ void CSoundRender_CoreA::set_master_volume(float f )
 void CSoundRender_CoreA::_clear	()
 {
 	inherited::_clear			();
+
+	xr_delete(pSoundVoiceChat);
+
     // remove targets
 	CSoundRender_Target*	T	= 0;
 	for (u32 tit=0; tit<s_targets.size(); tit++)
