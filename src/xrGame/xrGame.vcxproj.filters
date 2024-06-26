@@ -2515,6 +2515,9 @@
     <Filter Include="jsonxx">
       <UniqueIdentifier>{50aafa55-2885-4ace-807f-368de3ebfa46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="voice">
+      <UniqueIdentifier>{13ef9a9a-6dbc-43d4-b958-225b2bd17c79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mt_config.h">
@@ -7434,6 +7437,12 @@
     <ClInclude Include="UI_AnimMode.h">
       <Filter>UI\GameTypes\FreeMp\RP_ANIMATION_MODE</Filter>
     </ClInclude>
+    <ClInclude Include="VoiceChat.h">
+      <Filter>voice</Filter>
+    </ClInclude>
+    <ClInclude Include="VoiceSender.h">
+      <Filter>voice</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="damage_manager.cpp">
@@ -11125,6 +11134,15 @@
     </ClCompile>
     <ClCompile Include="ActorAnimation_Scripts.cpp">
       <Filter>Core\Client\Objects\actor\base</Filter>
+    </ClCompile>
+    <ClCompile Include="VoiceChat.cpp">
+      <Filter>voice</Filter>
+    </ClCompile>
+    <ClCompile Include="VoiceSender.cpp">
+      <Filter>voice</Filter>
+    </ClCompile>
+    <ClCompile Include="xrServer_Voice.cpp">
+      <Filter>voice</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

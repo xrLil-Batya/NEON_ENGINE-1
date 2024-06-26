@@ -111,6 +111,8 @@ public:
 	virtual		void				OnVoteStart				(NET_Packet& P)	{};
 	virtual		void				OnVoteStop				(NET_Packet& P)	{};
 
+	virtual		void				OnVoiceMessage(NET_Packet* P) {};
+
 	virtual		void				OnRender				()	{};
 	virtual		bool				IsServerControlHits		()	{return m_bServerControlHits;};
 	virtual		bool				IsEnemy					(game_PlayerState* ps)	{return false;};

@@ -30,6 +30,9 @@ enum	EGameActions
 	kDETECTOR,
 	kAnimationMode,
 	kSafeMode,
+	kVOICE_CHAT,
+	kVOICE_DISTANCE,
+
 	kWPN_1,
 	kWPN_2,
 	kWPN_3,
@@ -67,7 +70,7 @@ enum	EGameActions
 	kVOTE,
 	kVOTEYES,
 	kVOTENO,
-						
+								
 	kNEXT_SLOT,
 	kPREV_SLOT,
 						

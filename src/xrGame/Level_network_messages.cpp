@@ -471,6 +471,15 @@ void CLevel::ClientReceive()
 					CopyMemory(NewPacket, &(*P), sizeof(NET_Packet));
 				}
 			}break;
+
+		case M_VOICE_MESSAGE:
+		{
+			if (!game)
+				break;
+
+			Game().OnVoiceMessage(P);
+		}break;
+
 		}
 
 		net_msg_Release();

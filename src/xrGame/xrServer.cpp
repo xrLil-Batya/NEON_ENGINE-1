@@ -922,6 +922,13 @@ u32 xrServer::OnMessage	(NET_Packet& P, ClientID sender)			// Non-Zero means bro
 		{
 			OnScriptEvent(P, sender);
 		}break;
+
+	case M_VOICE_MESSAGE:
+	{
+		OnVoiceMessage(P, sender);
+	}break;
+
+
 	}
 
 	VERIFY							(verify_entities());

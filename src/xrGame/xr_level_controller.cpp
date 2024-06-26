@@ -39,7 +39,9 @@ _action  actions[]		= {
 	
 	{ "animation_mode",		kAnimationMode			,_both},
 	{ "safe_mode",			kSafeMode				,_both},
-
+		
+	{ "voice_chat",         kVOICE_CHAT             ,_mp},
+	{ "voice_distance",     kVOICE_DISTANCE         ,_mp},
 
 	{ "wpn_1",				kWPN_1					,_both},	
 	{ "wpn_2",				kWPN_2					,_both},	

@@ -315,6 +315,24 @@ void CUIMainIngameWnd::SetMPChatLog(CUIWindow* pChat, CUIWindow* pLog){
 	m_pMPLogWnd  = pLog;
 }
 
+void CUIMainIngameWnd::SetActiveVoiceIcon(bool active)
+{
+	R_ASSERT(m_icon_microphone || m_voice_distance);
+	u32 a = active ? 255 : 100;
+	u32 color = m_icon_microphone->GetTextureColor();
+	m_icon_microphone->SetTextureColor(subst_alpha(color, a));
+	color = m_voice_distance->GetTextColor();
+	m_voice_distance->SetTextColor(subst_alpha(color, a));
+}
+void CUIMainIngameWnd::SetVoiceDistance(u8 distance)
+{
+	R_ASSERT(m_voice_distance);
+	string16 text;
+	xr_sprintf(text, sizeof(text), "%u", distance);
+	m_voice_distance->SetText(text);
+}
+
+
 void CUIMainIngameWnd::Update()
 {
 	CUIWindow::Update();

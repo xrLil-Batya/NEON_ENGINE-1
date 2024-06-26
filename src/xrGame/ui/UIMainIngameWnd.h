@@ -43,6 +43,9 @@ protected:
 	CUIStatic*			m_ind_outfit_broken;
 	CUIStatic*			m_ind_overweight;
 
+	CUIStatic*			m_icon_microphone = nullptr;
+	CUITextWnd*			m_voice_distance = nullptr;
+
 public:
 	CUIStatic*			m_ind_boost_psy;
 	CUIStatic*			m_ind_boost_radia;
@@ -107,6 +110,9 @@ public:
 	};
 
 	void				SetMPChatLog					(CUIWindow* pChat, CUIWindow* pLog);
+	void				SetActiveVoiceIcon(bool active);
+	void				SetVoiceDistance(u8 distance);
+
 
 	// Задаем цвет соответствующей иконке
 	void				SetWarningIconColor				(EWarningIcons icon, const u32 cl);

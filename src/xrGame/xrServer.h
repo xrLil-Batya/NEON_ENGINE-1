@@ -313,7 +313,11 @@ public:
 	ScriptEvent*	GetLastServerScriptEvent();
 	void					PopLastServerScriptEvent();
 	u32						GetSizeServerScriptEvent();
+
+	void OnVoiceMessage(NET_Packet& P, ClientID sender);
 };
+
+
 
 
 #ifdef DEBUG
