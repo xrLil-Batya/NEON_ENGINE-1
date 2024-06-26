@@ -19,6 +19,10 @@
 #include "missile.h"
 #include "stalker_animation_manager_impl.h"
 
+
+#include "CharacterPhysicsSupport.h"
+
+
 using namespace StalkerSpace;
 
 void CStalkerAnimationManager::global_play_callback			(CBlend *blend)
