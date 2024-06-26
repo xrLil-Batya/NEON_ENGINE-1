@@ -2464,26 +2464,8 @@
     <Filter Include="Physics\scripts">
       <UniqueIdentifier>{69ebf4ce-a701-4d87-ae88-a77479be1f0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Server\Games\server\freemp">
-      <UniqueIdentifier>{d08e08ef-3e2f-4791-9485-377179643799}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\client\freemp">
-      <UniqueIdentifier>{00557b8e-492b-48c7-b4b0-332fc13aa87c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UI\GameTypes\FreeMp">
-      <UniqueIdentifier>{6b2387dd-8f2f-47b8-a16b-8018d236136a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="AI\AMonsters\common\net">
       <UniqueIdentifier>{459ccbd1-4831-4852-b1e6-77370a630e09}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\client\roleplay">
-      <UniqueIdentifier>{1c5daa59-a8c1-44b0-94b3-717b5321e1f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\server\roleplay">
-      <UniqueIdentifier>{275b40cc-c72b-4e31-9af8-bc1b0f0a7e86}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UI\GameTypes\Roleplay">
-      <UniqueIdentifier>{bff9e9c8-931c-4321-b0d5-9b1ebf07f842}</UniqueIdentifier>
     </Filter>
     <Filter Include="UI\Multiplayer\Roleplay">
       <UniqueIdentifier>{da488458-c041-4176-a2e8-5994dc36ea74}</UniqueIdentifier>
@@ -2509,13 +2491,43 @@
     <Filter Include="Core\Server\Games\server\deathmatch">
       <UniqueIdentifier>{379c1f1b-b8f9-423b-82eb-002244362d5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\GameTypes\FreeMp\RP_ANIMATION_MODE">
-      <UniqueIdentifier>{8c450480-22ac-4eef-a70a-4b8bf5264677}</UniqueIdentifier>
-    </Filter>
     <Filter Include="jsonxx">
       <UniqueIdentifier>{50aafa55-2885-4ace-807f-368de3ebfa46}</UniqueIdentifier>
     </Filter>
-    <Filter Include="voice">
+    <Filter Include="omp_gametypes">
+      <UniqueIdentifier>{f44f4e76-62c3-4c8f-808d-197fce9c9492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="omp_gametypes\client">
+      <UniqueIdentifier>{3ae6fcca-157d-468d-877d-f24a7c7e0ebc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="omp_gametypes\client\roleplay">
+      <UniqueIdentifier>{1c5daa59-a8c1-44b0-94b3-717b5321e1f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="omp_gametypes\client\freemp">
+      <UniqueIdentifier>{00557b8e-492b-48c7-b4b0-332fc13aa87c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="omp_gametypes\server">
+      <UniqueIdentifier>{ed1f23d2-e596-455b-843f-f0587d2a8e7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="omp_gametypes\server\roleplay">
+      <UniqueIdentifier>{275b40cc-c72b-4e31-9af8-bc1b0f0a7e86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="omp_gametypes\server\freemp">
+      <UniqueIdentifier>{d08e08ef-3e2f-4791-9485-377179643799}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="omp_gametypes\UI">
+      <UniqueIdentifier>{01efb0e5-3136-4732-a866-d439cde65829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="omp_gametypes\UI\FreeMp">
+      <UniqueIdentifier>{6b2387dd-8f2f-47b8-a16b-8018d236136a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="omp_gametypes\UI\FreeMp\RP_ANIMATION_MODE">
+      <UniqueIdentifier>{8c450480-22ac-4eef-a70a-4b8bf5264677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="omp_gametypes\UI\Roleplay">
+      <UniqueIdentifier>{bff9e9c8-931c-4321-b0d5-9b1ebf07f842}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="omp_gametypes\voice">
       <UniqueIdentifier>{13ef9a9a-6dbc-43d4-b958-225b2bd17c79}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -7405,13 +7417,13 @@
       <Filter>Physics\scripts</Filter>
     </ClInclude>
     <ClInclude Include="game_sv_freemp.h">
-      <Filter>Core\Server\Games\server\freemp</Filter>
+      <Filter>omp_gametypes\server\freemp</Filter>
     </ClInclude>
     <ClInclude Include="game_cl_freemp.h">
-      <Filter>Core\Server\Games\client\freemp</Filter>
+      <Filter>omp_gametypes\client\freemp</Filter>
     </ClInclude>
     <ClInclude Include="UIGameFMP.h">
-      <Filter>UI\GameTypes\FreeMp</Filter>
+      <Filter>omp_gametypes\UI\FreeMp</Filter>
     </ClInclude>
     <ClInclude Include="net_physics_state.h">
       <Filter>AI\AMonsters\common\net</Filter>
@@ -7420,13 +7432,13 @@
       <Filter>Core\Server</Filter>
     </ClInclude>
     <ClInclude Include="game_cl_roleplay.h">
-      <Filter>Core\Server\Games\client\roleplay</Filter>
+      <Filter>omp_gametypes\client\roleplay</Filter>
     </ClInclude>
     <ClInclude Include="game_sv_roleplay.h">
-      <Filter>Core\Server\Games\server\roleplay</Filter>
+      <Filter>omp_gametypes\server\roleplay</Filter>
     </ClInclude>
     <ClInclude Include="UIGameRP.h">
-      <Filter>UI\GameTypes\Roleplay</Filter>
+      <Filter>omp_gametypes\UI\Roleplay</Filter>
     </ClInclude>
     <ClInclude Include="ui\UISpawnMenuRP.h">
       <Filter>UI\Multiplayer\Roleplay</Filter>
@@ -7435,13 +7447,13 @@
       <Filter>jsonxx</Filter>
     </ClInclude>
     <ClInclude Include="UI_AnimMode.h">
-      <Filter>UI\GameTypes\FreeMp\RP_ANIMATION_MODE</Filter>
+      <Filter>omp_gametypes\UI\FreeMp\RP_ANIMATION_MODE</Filter>
     </ClInclude>
     <ClInclude Include="VoiceChat.h">
-      <Filter>voice</Filter>
+      <Filter>omp_gametypes\voice</Filter>
     </ClInclude>
     <ClInclude Include="VoiceSender.h">
-      <Filter>voice</Filter>
+      <Filter>omp_gametypes\voice</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -11091,13 +11103,13 @@
       <Filter>AI\AMonsters\humans\stalker</Filter>
     </ClCompile>
     <ClCompile Include="game_sv_freemp.cpp">
-      <Filter>Core\Server\Games\server\freemp</Filter>
+      <Filter>omp_gametypes\server\freemp</Filter>
     </ClCompile>
     <ClCompile Include="game_cl_freemp.cpp">
-      <Filter>Core\Server\Games\client\freemp</Filter>
+      <Filter>omp_gametypes\client\freemp</Filter>
     </ClCompile>
     <ClCompile Include="UIGameFMP.cpp">
-      <Filter>UI\GameTypes\FreeMp</Filter>
+      <Filter>omp_gametypes\UI\FreeMp</Filter>
     </ClCompile>
     <ClCompile Include="net_physics_state.cpp">
       <Filter>AI\AMonsters\common\net</Filter>
@@ -11106,43 +11118,43 @@
       <Filter>Core\Server</Filter>
     </ClCompile>
     <ClCompile Include="game_cl_roleplay.cpp">
-      <Filter>Core\Server\Games\client\roleplay</Filter>
+      <Filter>omp_gametypes\client\roleplay</Filter>
     </ClCompile>
     <ClCompile Include="game_sv_roleplay.cpp">
-      <Filter>Core\Server\Games\server\roleplay</Filter>
+      <Filter>omp_gametypes\server\roleplay</Filter>
     </ClCompile>
     <ClCompile Include="UIGameRP.cpp">
-      <Filter>UI\GameTypes\Roleplay</Filter>
+      <Filter>omp_gametypes\UI\Roleplay</Filter>
     </ClCompile>
     <ClCompile Include="ui\UISpawnMenuRP.cpp">
       <Filter>UI\Multiplayer\Roleplay</Filter>
     </ClCompile>
     <ClCompile Include="game_sv_roleplay_drop_items.cpp">
-      <Filter>Core\Server\Games\server\roleplay</Filter>
+      <Filter>omp_gametypes\server\roleplay</Filter>
     </ClCompile>
     <ClCompile Include="game_sv_freemp_trade.cpp">
-      <Filter>Core\Server\Games\server\freemp</Filter>
+      <Filter>omp_gametypes\server\freemp</Filter>
     </ClCompile>
     <ClCompile Include="game_sv_freemp_save_players.cpp">
-      <Filter>Core\Server\Games\server\freemp</Filter>
+      <Filter>omp_gametypes\server\freemp</Filter>
     </ClCompile>
     <ClCompile Include="..\jsonxx\jsonxx.cc">
       <Filter>jsonxx</Filter>
     </ClCompile>
     <ClCompile Include="UI_AnimMode.cpp">
-      <Filter>UI\GameTypes\FreeMp\RP_ANIMATION_MODE</Filter>
+      <Filter>omp_gametypes\UI\FreeMp\RP_ANIMATION_MODE</Filter>
     </ClCompile>
     <ClCompile Include="ActorAnimation_Scripts.cpp">
       <Filter>Core\Client\Objects\actor\base</Filter>
     </ClCompile>
     <ClCompile Include="VoiceChat.cpp">
-      <Filter>voice</Filter>
+      <Filter>omp_gametypes\voice</Filter>
     </ClCompile>
     <ClCompile Include="VoiceSender.cpp">
-      <Filter>voice</Filter>
+      <Filter>omp_gametypes\voice</Filter>
     </ClCompile>
     <ClCompile Include="xrServer_Voice.cpp">
-      <Filter>voice</Filter>
+      <Filter>omp_gametypes\voice</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
