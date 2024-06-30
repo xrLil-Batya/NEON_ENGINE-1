@@ -149,6 +149,14 @@ void CUIMainIngameWnd::Init()
 	m_ind_outfit_broken		= UIHelper::CreateStatic(uiXml, "indicator_outfit_broken", this);
 	m_ind_overweight		= UIHelper::CreateStatic(uiXml, "indicator_overweight", this);
 
+	if (!IsGameTypeSingle())
+	{
+		m_icon_microphone = UIHelper::CreateStatic(uiXml, "icon_microphone", this);
+		m_icon_microphone->Show(true);
+		m_voice_distance = UIHelper::CreateTextWnd(uiXml, "voice_distance", this);
+		SetActiveVoiceIcon(false);
+	}
+
 	m_ind_boost_psy			= UIHelper::CreateStatic(uiXml, "indicator_booster_psy", this);
 	m_ind_boost_radia		= UIHelper::CreateStatic(uiXml, "indicator_booster_radia", this);
 	m_ind_boost_chem		= UIHelper::CreateStatic(uiXml, "indicator_booster_chem", this);
