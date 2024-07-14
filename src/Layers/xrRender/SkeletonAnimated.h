@@ -104,8 +104,9 @@ private:
 	void						IFXBlendSetup			(CBlend &B, MotionID motion_ID, float blendAccrue, float blendFalloff,float Power ,float Speed,u16 bone);
 //.	bool						LoadMotions				(LPCSTR N, IReader *data);
 public:
+	// std::pair<LPCSTR, LPCSTR>	LL_MotionDefName_dbg(MotionID	ID);
+ 
 #if (defined DEBUG || defined _EDITOR)
-	std::pair<LPCSTR,LPCSTR>	LL_MotionDefName_dbg	(MotionID	ID);
 	void						LL_DumpBlends_dbg		( );
 #endif
 	u32							LL_PartBlendsCount			( u32 bone_part_id );
@@ -114,7 +115,7 @@ public:
 
 	void						SetUpdateTracksCalback		( IUpdateTracksCallback	*callback );
 	IUpdateTracksCallback		*GetUpdateTracksCalback		( ){ return m_update_tracks_callback; }
-//	LPCSTR						LL_MotionDefName_dbg	(LPVOID		ptr);
+
 
 #ifdef _EDITOR
     u32							LL_CycleCount	(){u32 cnt=0; for (u32 k=0; k<m_Motions.size(); k++) cnt+=m_Motions[k].motions.cycle()->size(); return cnt;}

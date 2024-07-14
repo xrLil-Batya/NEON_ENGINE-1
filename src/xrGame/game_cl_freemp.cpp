@@ -197,6 +197,9 @@ void game_cl_freemp::OnRender()
 	inherited::OnRender();
 	if (m_pVoiceChat)
 		m_pVoiceChat->OnRender();
+
+	if (Actor())
+		Actor()->g_DebugAnimation();
 }
 
 LPCSTR game_cl_freemp::GetGameScore(string32&	score_dest)

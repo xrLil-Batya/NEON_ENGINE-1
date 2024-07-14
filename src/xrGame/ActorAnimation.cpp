@@ -8,8 +8,11 @@
 #include "level.h"
 #ifdef DEBUG
 #include "PHDebug.h"
-#include "ui_base.h"
+
 #endif
+
+#include "ui_base.h"
+
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "Car.h"
@@ -391,6 +394,11 @@ char* mov_state[] ={
 	"run",
 	"sprint",
 };
+
+int moving_idx_ACTOR = 0;
+MotionID torso_Actor;
+MotionID legs_Actor;
+MotionID head_Actor;
 
 void CActor::g_SetAnimation( u32 mstate_rl )
 {
@@ -836,18 +844,7 @@ void CActor::g_SetAnimation( u32 mstate_rl )
 
 
 #ifdef DEBUG
-	if(bDebug && g_ShowAnimationInfo)
-	{
-		UI().Font().pFontStat->OutSetI	(0,0);
-		UI().Font().pFontStat->OutNext("[%s]",mov_state[moving_idx]);
-		IKinematicsAnimated* KA = smart_cast<IKinematicsAnimated*>(Visual());
-		if(M_torso)
-			UI().Font().pFontStat->OutNext("torso [%s]",KA->LL_MotionDefName_dbg(M_torso).first);
-		if(M_head)
-			UI().Font().pFontStat->OutNext("head [%s]",KA->LL_MotionDefName_dbg(M_head).first);
-		if(M_legs)
-			UI().Font().pFontStat->OutNext("legs [%s]",KA->LL_MotionDefName_dbg(M_legs).first);
-	}
+
 #endif
 
 #ifdef DEBUG
@@ -885,6 +882,15 @@ void CActor::g_SetAnimation( u32 mstate_rl )
 	};
 #endif
 
+	if (this == Actor())
+	{
+		moving_idx_ACTOR = moving_idx;
+		torso_Actor = M_torso;
+		legs_Actor = M_legs;
+		head_Actor = M_head;		
+	}
+ 
+
 	if (!m_current_torso_blend)
 		return;
 
@@ -905,6 +911,19 @@ void CActor::g_SetAnimation( u32 mstate_rl )
 
 
 	m_current_torso_blend->timeCurrent	= m_current_legs_blend->timeCurrent/m_current_legs_blend->timeTotal*m_current_torso_blend->timeTotal;
+}
+
+void CActor::g_DebugAnimation()
+{
+  	UI().Font().pFontStat->OutSetI(0, 0);
+	UI().Font().pFontStat->OutNext("[%s]", mov_state[moving_idx_ACTOR]);
+	IKinematicsAnimated* KA = smart_cast<IKinematicsAnimated*>(Visual());
+	//if (torso_Actor)
+	//	UI().Font().pFontStat->OutNext("torso [%s]", KA->LL_MotionDefName_dbg(torso_Actor).first);
+	//if (head_Actor)
+	//	UI().Font().pFontStat->OutNext("head [%s]", KA->LL_MotionDefName_dbg(head_Actor).first);
+	//if (legs_Actor)
+	//	UI().Font().pFontStat->OutNext("legs [%s]", KA->LL_MotionDefName_dbg(legs_Actor).first);
 }
 	 
 

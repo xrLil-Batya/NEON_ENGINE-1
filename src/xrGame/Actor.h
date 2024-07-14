@@ -351,7 +351,7 @@ public:
 
 	void					g_SetAnimation		(u32 mstate_rl);
 
-
+	void					g_DebugAnimation	();
 
 
 public:

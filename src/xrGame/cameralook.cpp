@@ -110,11 +110,8 @@ void CCameraLook2::Update(Fvector& point, Fvector&)
 	a_xform.setXYZ					(0, -yaw, 0);
 	a_xform.translate_over			(point);
 	
-	
-
 	Fvector _off;
-	
-	CActorMP* actorMP = smart_cast<CActorMP*>(Level().CurrentControlEntity());
+ 	CActorMP* actorMP = smart_cast<CActorMP*>(Level().CurrentControlEntity());
 
 	if (actorMP)
 	{
@@ -129,9 +126,6 @@ void CCameraLook2::Update(Fvector& point, Fvector&)
 	vPosition.set					(_off);
 
 	dist = 1.4f;
-
-
-
 	UpdateDistance(_off);
 }
     
