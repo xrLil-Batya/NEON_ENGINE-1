@@ -40,8 +40,67 @@ void CCameraLook::Update(Fvector& point, Fvector& /**noise_dangle/**/)
 	UpdateDistance		(point);
 }
 
+#include "CustomRocket.h"
+#include "Missile.h"
+#include "Car.h"
+#include "../xrEngine/GameMtlLib.h"
+
+
+ICF static BOOL GetPickDist_Callback(collide::rq_result& result, LPVOID params)
+{
+	collide::rq_result* RQ = (collide::rq_result*)params;
+
+	if (result.O)
+	{
+		if (CCustomRocket* pRocket = smart_cast<CCustomRocket*>(result.O))
+		{
+			if (!pRocket->Useful())
+				return TRUE;
+		}
+
+		if (CMissile* pMissile = smart_cast<CMissile*>(result.O))
+		{
+			if (!pMissile->Useful())
+				return TRUE;
+		}
+
+		if (CActor* pActor = smart_cast<CActor*>(Level().CurrentEntity()))
+		{
+			if (result.O == pActor)
+				return TRUE;
+			if (pActor->Holder())
+			{
+				CCar* car = smart_cast<CCar*>(pActor->Holder());
+				if (car && result.O == car)
+					return TRUE;
+			}
+		}
+	}
+	else
+	{
+		CDB::TRI* T = Level().ObjectSpace.GetStaticTris() + result.element;
+		SGameMtl* pMtl = GMLib.GetMaterialByIdx(T->material);
+		if (pMtl && (pMtl->Flags.is(SGameMtl::flPassable) || pMtl->Flags.is(SGameMtl::flActorObstacle)))
+			return TRUE;
+	}
+
+	*RQ = result;
+	return FALSE;
+}
+
+collide::rq_result GetPickResult(Fvector pos, Fvector dir, float range, CObject* ignore)
+{
+	collide::rq_result RQ;
+	RQ.set(nullptr, range, -1);
+	collide::rq_results RQR;
+	collide::ray_defs RD(pos, dir, RQ.range, CDB::OPT_FULL_TEST, collide::rqtBoth);
+	Level().ObjectSpace.RayQuery(RQR, RD, GetPickDist_Callback, &RQ, nullptr, ignore);
+	return RQ;
+}
+
 void CCameraLook::UpdateDistance( Fvector& point )
 {
+	/*
 	Fvector				vDir;
 	collide::rq_result	R;
 
@@ -54,6 +113,21 @@ void CCameraLook::UpdateDistance( Fvector& point )
 	
 	vPosition.mul		(vDirection,-d-VIEWPORT_NEAR);
 	vPosition.add		(point);
+	*/
+
+	// IXRAY REPO
+	Fvector vDir;
+	vDir.invert(vDirection);
+
+	collide::rq_result R;
+	float covariance = VIEWPORT_NEAR * 6.0f;
+	R = GetPickResult(point, vDir, dist + covariance, parent);
+
+	float d = psCamSlideInert * prev_d + (1.0f - psCamSlideInert) * (R.range - covariance);
+	prev_d = d;
+
+	vPosition.mul(vDirection, -d - VIEWPORT_NEAR);
+	vPosition.add(point);
 }
 
 void CCameraLook::Move( int cmd, float val, float factor)
@@ -96,36 +170,34 @@ void CCameraLook2::OnActivate( CCameraBase* old_cam )
 }
 #include "actor_mp_client.h"
 
-void CCameraLook2::Update(Fvector& point, Fvector&)
+void CCameraLook2::Update(Fvector& point, Fvector& noise_dangle)
 {  
+ 	Fmatrix mR, R;
+	Fmatrix rX, rY, rZ;
+	rX.rotateX(noise_dangle.x);
+	rY.rotateY(-noise_dangle.y);
+	rZ.rotateZ(noise_dangle.z);
+	R.mul_43(rY, rX);
+	R.mulB_43(rZ);
 
+	mR.identity();
+	Fquaternion Q;
+	Q.rotationYawPitchRoll(roll, yaw, pitch);
+	mR.rotation(Q);
+	mR.transpose();
+	mR.mulB_43(R);
 
-	Fmatrix mR;
-	mR.setHPB						(-yaw,-pitch,-roll);
-
-	vDirection.set					(mR.k);
-	vNormal.set						(mR.j);
+	vDirection.set(mR.k);
+	vNormal.set(mR.j);
 
 	Fmatrix							a_xform;
-	a_xform.setXYZ					(0, -yaw, 0);
-	a_xform.translate_over			(point);
-	
-	Fvector _off;
- 	CActorMP* actorMP = smart_cast<CActorMP*>(Level().CurrentControlEntity());
+	a_xform.setXYZ(0, -yaw, 0);
+	a_xform.translate_over(point);
 
-	if (actorMP)
-	{
-		if (actorMP->MpAnimationMODE())
-			_off = Fvector3().set(0, 0.23, -1);
-		else
-			_off = m_cam_offset;
-	}
- 
+	Fvector _off = m_cam_offset;
+	a_xform.transform_tiny(_off);
+	vPosition.set(_off);
 
-	a_xform.transform_tiny			(_off);
-	vPosition.set					(_off);
-
-	dist = 1.4f;
 	UpdateDistance(_off);
 }
     
