@@ -2683,14 +2683,14 @@ public:
 
 #ifndef MP_SAVE_JSON
 			string_path filepath;
-			FS.update_path(filepath, "$mp_saves_logins$", "logins.ltx");
+			FS.update_path(filepath, "$mp_saves$", "account\\logins.ltx");
 			CInifile* file = xr_new<CInifile>(filepath, false, true);
 			if (file)
 				file->w_string(login, "password", password);
 			file->save_as(filepath);
 #else
 			string_path filepath;
-			FS.update_path(filepath, "$mp_saves_logins$", "logins.json");			 
+			FS.update_path(filepath, "$mp_saves$", "account\\logins.ltx");			 
 			Object jsonMAIN;
 			Array jsonArr;
 			Object table;
@@ -2786,7 +2786,7 @@ public:
 
 #ifndef MP_SAVE_JSON
 			string_path filepath;
-			FS.update_path(filepath, "$mp_saves_logins$", "logins.ltx");
+			FS.update_path(filepath, "$mp_saves$", "account\\logins.ltx");
 			CInifile* file = xr_new<CInifile>(filepath, false, true);
 			if (file && file->section_exist(login))
 				file->w_bool(login, "banned", true);
@@ -2822,7 +2822,7 @@ public:
 		if (OnServer())
 		{
 			string_path filepath;
-			FS.update_path(filepath, "$mp_saves_logins$", "logins.ltx");
+			FS.update_path(filepath, "$mp_saves$", "account\\logins.ltx");
 			CInifile* file = xr_new<CInifile>(filepath, false, true);
 
 			string256 tmp, login;

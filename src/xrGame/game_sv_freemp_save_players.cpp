@@ -19,11 +19,11 @@ bool game_sv_freemp::HasSaveFile(game_PlayerState* ps)
 		return false;
 
 	string_path path;
-	string32 filename;
-	xr_strcpy(filename, ps->getName());
-	xr_strcat(filename, ".ltx");
 
-	FS.update_path(path, "$mp_saves_players$", filename);
+	string32 filep;
+	sprintf(filep, "players\\%s.ltx", ps->getName());
+	FS.update_path(path, "$mp_saves$", filep);
+ 
 	CInifile* file = xr_new<CInifile>(path, true);
 
 	if (file)
@@ -42,12 +42,11 @@ bool game_sv_freemp::HasSaveFile(game_PlayerState* ps)
 #else 
 	if (ps->GameID == get_id(server().GetServerClient()->ID)->GameID)
 		return false;
-	string_path path;
-	string32 filename = { 0 };
-	xr_strcpy(filename, ps->getName());
-	xr_strcat(filename, ".json");
 
-	return FS.exist(path, "$mp_saves_players$", filename);
+	string_path path;
+	string32 filep;
+	sprintf(filep, "players\\%s.json", ps->getName());
+ 	return FS.exist(path, "$mp_saves$", filep);
 #endif
 
 }
@@ -346,10 +345,9 @@ void game_sv_freemp::LoadInvBox(CSE_ALifeInventoryBox* box, CInifile* file)
 bool game_sv_freemp::LoadPlayerPosition(game_PlayerState* ps, Fvector& pos, Fvector& angle, float& health)
 {
 	string_path file_name;
-	string32 filename;
-	xr_strcpy(filename, ps->getName());
-	xr_strcat(filename, ".ltx");
-	FS.update_path(file_name, "$mp_saves_players$", filename);
+	string32 filep;
+	sprintf(filep, "players\\%s.ltx", ps->getName());
+ 	FS.update_path(file_name, "$mp_saves$", filep);
 
 	CInifile* file = xr_new<CInifile>(file_name);
 
@@ -436,42 +434,30 @@ void game_sv_freemp::SaveJson(game_PlayerState* ps)
 	jsonMAIN << "health" << Number(pActor->GetfHealth());
 
 	string_path path_name;
-
-	string256 file = {0};
-	xr_strcat(file, ps->getName());
-	xr_strcat(file, ".json");
-	FS.update_path(path_name, "$mp_saves_players$", file);
+ 
+	string32 filep;
+	sprintf(filep, "players\\%s.json", ps->getName());
+ 	FS.update_path(path_name, "$mp_saves$", filep);
 
 	IWriter* file_W = FS.w_open(path_name);
 	if (file_W)
 		file_W->w_string(jsonMAIN.json().c_str());
 	FS.w_close(file_W);
-
-	/*
-	std::ofstream ofile(path_name);
-
-	if (ofile.is_open())
-		ofile << jsonMAIN.json().c_str();
-	ofile.close();
-	*/
 }
 
 bool game_sv_freemp::LoadJson(game_PlayerState* ps)
 {
 	string_path path;
 	
-	string256 filename = {0};
-	xr_strcpy(filename, ps->getName());
-	xr_strcat(filename, ".json");
-
-	FS.update_path(path, "$mp_saves_players$", filename);
+	string32 filep;
+	sprintf(filep, "players\\%s.json", ps->getName());
+	FS.update_path(path_name, "$mp_saves$", filep);
 
 	SpawnItemToActor(ps->GameID, "device_pda");
 	SpawnItemToActor(ps->GameID, "device_torch");
 	SpawnItemToActor(ps->GameID, "wpn_knife");
 	SpawnItemToActor(ps->GameID, "wpn_binoc");
-
-
+	 
 	Object json;
 
 	std::ifstream ifile(path);
@@ -704,15 +690,16 @@ void game_sv_freemp::LoadInventory(CSE_ALifeInventoryBox* box, string_path pathf
 
 bool game_sv_freemp::LoadPlayerPosition(game_PlayerState* ps, Fvector& position, Fvector& angle, float& health)
 {
-	string_path path; 
+	string_path dir_path; 
+	
+	// FILENAME
 	string32 filename = { 0 };
-	xr_strcpy(filename, ps->getName());
-	xr_strcat(filename, ".json");
-	FS.update_path(path, "$mp_saves_players$", filename);
-
-
+	sprintf(filename, "players\\%s.json", ps->getName());
+	// FILEPATH
+	FS.update_path(dir_path, "$mp_saves$", filename);
+  
 	Object json;
-	std::ifstream ifile(path);
+	std::ifstream ifile(dir_path);
 	if (ifile.is_open())
 	{
 		std::string str((std::istreambuf_iterator<char>(ifile)), std::istreambuf_iterator<char>());

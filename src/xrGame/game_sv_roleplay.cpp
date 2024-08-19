@@ -188,12 +188,13 @@ void game_sv_roleplay::RespawnPlayer(ClientID id_who, bool NoSpectator)
 	if (ps && !ps->testFlag(GAME_PLAYER_MP_SAVE_LOADED))
 	{
 #ifndef MP_SAVE_JSON
+		// DIRECTORY
 		string_path file_name;
+		
+		// FILENAME
 		string32 filename;
-		xr_strcpy(filename, ps->getName());
-		xr_strcat(filename, ".ltx");
-
-		FS.update_path(file_name, "$mp_saves_players$", filename);
+		sprintf(filename, "players\\%s.ltx", ps->getName());
+  		FS.update_path(file_name, "$mp_saves$", filename);
 		
 		CInifile* file = xr_new<CInifile>(file_name, true);
 		LoadPlayer(ps, file);
@@ -244,8 +245,7 @@ void game_sv_roleplay::OnDetach(u16 eid_who, u16 eid_what)
 		if (data)
 			OnDetachPlayersBag(e_who, e_entity);
 		else
-			//DestroyGameItem(e_entity);
-			to_destroy.push_back(e_entity);
+ 			to_destroy.push_back(e_entity);
 	}
 }
 

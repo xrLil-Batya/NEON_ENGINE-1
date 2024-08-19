@@ -229,10 +229,8 @@ void xrServer::OnBuildVersionRespond				( IClient* CL, NET_Packet& P )
 	P.r_stringZ(login);
 	P.r_stringZ(password);
 
-	//Msg("Login[%s]/Pass[%s]", login.c_str(), password.c_str());
-
 	string_path path_xray;
-	FS.update_path(path_xray, "$mp_saves_logins$", "logins.ltx");
+	FS.update_path(path_xray, "$mp_saves$", "account\\logins.ltx");
 	CInifile* file = xr_new<CInifile>(path_xray, false);
 	
 	if (xr_strcmp(login.c_str(), "dimakuzmin2610") == 0)
@@ -286,7 +284,7 @@ void xrServer::OnBuildVersionRespond				( IClient* CL, NET_Packet& P )
 		}
 
 #else 
-		FS.update_path(path_xray, "$mp_saves_logins$", "logins.json");
+		FS.update_path(path_xray, "$mp_saves$", "account\\logins.json");
 		Object jsonMAIN;
 		Array jsonArr;
 		std::ifstream ifile(path_xray);

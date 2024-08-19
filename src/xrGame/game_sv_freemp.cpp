@@ -180,10 +180,10 @@ void game_sv_freemp::RespawnPlayer(ClientID id_who, bool NoSpectator)
 	{
 #ifndef MP_SAVE_JSON
 		string_path file_name;
-		string32 filename;
-		xr_strcpy(filename, ps->getName());
-		xr_strcat(filename, ".ltx");
-		FS.update_path(file_name, "$mp_saves_players$", filename);
+		
+		string32 filep;
+		sprintf(filep, "players\\%s.ltx", ps->getName());
+		FS.update_path(file_name, "$mp_saves$", filep);
 		CInifile* file = xr_new<CInifile>(file_name, true);
 		LoadPlayer(ps, file);
 #else 
@@ -290,11 +290,10 @@ void game_sv_freemp::Update()
 					return;
 
 				string_path file_name;
-				string32 filename;
-				xr_strcpy(filename, player.second->getName());
-				xr_strcat(filename, ".ltx");
-
-				FS.update_path(file_name, "$mp_saves_players$", filename);
+				
+				string32 filep;
+				sprintf(filep, "players\\%s.ltx", player.second->getName());
+ 				FS.update_path(file_name, "$mp_saves$", filep);
 #ifndef MP_SAVE_JSON
 				CInifile* file = xr_new<CInifile>(file_name, false, false);
 				
@@ -327,12 +326,12 @@ void game_sv_freemp::Update()
 				}
 
 				string_path path_name;
-				string64 invbox_name;
-				xr_strcpy(invbox_name, box->name_replace());
+				string64 invbox_path;
+				sprintf(invbox_path, "inventory_box\\%s", box->name_replace());
 
 #ifndef MP_SAVE_JSON
-				xr_strcat(invbox_name, ".ltx");
-				FS.update_path(path_name, "$mp_saves_invbox$", invbox_name);
+				xr_strcat(invbox_path, ".json");
+ 				FS.update_path(path_name, "$mp_saves$", invbox_path);
 
 				if (need_load)
 				{
@@ -350,8 +349,8 @@ void game_sv_freemp::Update()
 					}											
 				}
 #else 
-				xr_strcat(invbox_name, ".json");
-				FS.update_path(path_name, "$mp_saves_invbox$", invbox_name);
+				xr_strcat(invbox_path, ".ltx");
+				FS.update_path(path_name, "$mp_saves$", invbox_name);
 
 				if (need_load)
 				{
