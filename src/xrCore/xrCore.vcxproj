@@ -582,7 +582,6 @@ copy /Y "$(SolutionDir)..\SDK\binaries\x64\libprotobuf.dll" "$(OutDir)libprotobu
     <ClCompile Include="log.cpp" />
     <ClCompile Include="LzHuf.cpp" />
     <ClCompile Include="lzo_compressor.cpp" />
-    <ClCompile Include="memory_allocation_stats.cpp" />
     <ClCompile Include="memory_monitor.cpp" />
     <ClCompile Include="memory_usage.cpp" />
     <ClCompile Include="Model.cpp">
@@ -668,7 +667,6 @@ copy /Y "$(SolutionDir)..\SDK\binaries\x64\libprotobuf.dll" "$(OutDir)libprotobu
     <ClCompile Include="xrDebugNew.cpp" />
     <ClCompile Include="xrMemory.cpp" />
     <ClCompile Include="xrMemory_align.cpp" />
-    <ClCompile Include="xrMemory_debug.cpp" />
     <ClCompile Include="xrMemory_POOL.cpp" />
     <ClCompile Include="xrMemory_pso_Copy.cpp">
       <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">AssemblyAndSourceCode</AssemblerOutput>

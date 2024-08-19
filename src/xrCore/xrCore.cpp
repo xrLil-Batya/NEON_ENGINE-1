@@ -81,20 +81,16 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 		
 		Memory._initialize	(strstr(Params,"-mem_debug") ? TRUE : FALSE);
 
-		DUMP_PHASE;
-
 		InitLog				();
 		_initialize_cpu		();
-
-//		Debug._initialize	();
 
 		rtc_initialize		();
 
 		xr_FS				= xr_new<CLocatorAPI>	();
 
 		xr_EFS				= xr_new<EFS_Utils>		();
-//.		R_ASSERT			(co_res==S_OK);
 	}
+
 	if (init_fs){
 		u32 flags			= 0;
 		if (0!=strstr(Params,"-build"))	 flags |= CLocatorAPI::flBuildCopy;
